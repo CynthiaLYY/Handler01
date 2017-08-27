@@ -18,6 +18,7 @@ public class SecondActivity extends AppCompatActivity {
 
     class MyThread extends Thread{
         public Handler hander;
+        public Looper looper;
         @Override
         public void run() {
             Looper.prepare();
@@ -36,12 +37,19 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         thread =new MyThread();
         thread.start();
-        try {
+        /*try {
             thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         thread.hander.sendEmptyMessage(1);
+        handler.sendEmptyMessage(1);*/
+        handler = new Handler(thread.looper){
+            public void handleMessage(Message msg){
+                System.out.print(msg);
+
+            }
+        };
         handler.sendEmptyMessage(1);
     }
 }
